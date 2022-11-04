@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+   @StateObject var routines = Routines()
+	  
+   
+   
+   
     var body: some View {
 	   NavigationView {
 		  
-		  Text("Hello, world!")
+		  Text("Hello World")
 			  .padding()
 			  
 		  

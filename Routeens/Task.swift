@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct Task: Identifiable, Codable {
+   var id = UUID()
+   let name: String
+  
+}

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64616D73291330C60017D1C7 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64616D72291330C60017D1C7 /* Routine.swift */; };
+		64616D75291331A90017D1C7 /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64616D74291331A90017D1C7 /* Routines.swift */; };
 		64FBC62229131C4400879F79 /* RouteensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FBC62129131C4400879F79 /* RouteensApp.swift */; };
 		64FBC62429131C4400879F79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FBC62329131C4400879F79 /* ContentView.swift */; };
 		64FBC62629131C4700879F79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64FBC62529131C4700879F79 /* Assets.xcassets */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		64616D72291330C60017D1C7 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
+		64616D74291331A90017D1C7 /* Routines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routines.swift; sourceTree = "<group>"; };
 		64FBC61E29131C4400879F79 /* Routeens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Routeens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64FBC62129131C4400879F79 /* RouteensApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteensApp.swift; sourceTree = "<group>"; };
 		64FBC62329131C4400879F79 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 			children = (
 				64FBC62129131C4400879F79 /* RouteensApp.swift */,
 				64FBC62329131C4400879F79 /* ContentView.swift */,
+				64616D74291331A90017D1C7 /* Routines.swift */,
+				64616D72291330C60017D1C7 /* Routine.swift */,
 				64FBC62F291320A300879F79 /* Task.swift */,
 				64FBC62529131C4700879F79 /* Assets.xcassets */,
 				64FBC62729131C4700879F79 /* Preview Content */,
@@ -140,8 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64616D75291331A90017D1C7 /* Routines.swift in Sources */,
 				64FBC62429131C4400879F79 /* ContentView.swift in Sources */,
 				64FBC630291320A300879F79 /* Task.swift in Sources */,
+				64616D73291330C60017D1C7 /* Routine.swift in Sources */,
 				64FBC62229131C4400879F79 /* RouteensApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
