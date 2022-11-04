@@ -7,12 +7,15 @@
 
 import Foundation
 
-struct Routine {
+struct Routine: Identifiable, Codable  {
+   var id = UUID()
+   let routineName: String
    var tasks = [Task]()
    let startTime: Date?
    let endTime: Date?
    
-   init (tasks: [Task], startTimeHour: Int, startTimeMin: Int, endTimeHour: Int, endTimeMinute: Int){
+   init (routineName: String, tasks: [Task], startTimeHour: Int, startTimeMin: Int, endTimeHour: Int, endTimeMinute: Int){
+	  self.routineName = routineName
 	  self.tasks = tasks
 	  
 	  var startTimeComponents = DateComponents()

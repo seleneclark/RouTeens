@@ -15,9 +15,21 @@ struct ContentView: View {
    
     var body: some View {
 	   NavigationView {
-		  
-		  Text("Hello World")
-			  .padding()
+		  List{
+			 ForEach(routines.routine) { item in
+				ForEach (item.tasks){ item2 in
+				   HStack {
+					  Text(item2.name)
+					  Text("Hello World")
+						 .padding()
+				}
+				   
+				}
+				
+				
+			 }
+			 
+		  }
 			  
 		  
 		  

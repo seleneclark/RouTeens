@@ -19,7 +19,7 @@ class Routines: ObservableObject {
 	  morningTasks.append(Task(name:"Take out trash"))
 	  morningTasks.append(Task(name:"Put backpack in car"))
   
-	  let morningRoutine = Routine(tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 9, endTimeMinute: 0)
+	  let morningRoutine = Routine(routineName: "Morning Routine", tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 9, endTimeMinute: 0)
 	  self.routine.append(morningRoutine)
 //		 var routines = [Routine]()
 //		 routines.append(morningRoutine)
