@@ -13,6 +13,7 @@ struct Routine: Identifiable, Codable  {
    var tasks = [Task]()
    let startTime: Date
    let endTime: Date
+   var lastOpened: Date
    
    init (routineName: String, tasks: [Task], startTimeHour: Int, startTimeMin: Int, endTimeHour: Int, endTimeMinute: Int){
 	  self.routineName = routineName
@@ -27,6 +28,8 @@ struct Routine: Identifiable, Codable  {
 	  endTimeComponents.hour = endTimeHour
 	  endTimeComponents.minute = endTimeMinute
 	  self.endTime = Calendar.current.date(from: endTimeComponents) ?? Date.now
+	  
+	  self.lastOpened = Date.now
    }
    
    
