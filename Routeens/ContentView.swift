@@ -7,23 +7,22 @@
 
 import SwiftUI
 
-
 struct ContentView: View {
    @StateObject var routines = Routines()
    @State var textColor: Color = Color.black
 
-   
     var body: some View {
 	   NavigationView {
 			 List{
-				ForEach($routines.routine) { $routine in
-				   ForEach ($routine.tasks){ $task in
-					  task.pending ? Button(task.name, action: {task.pending.toggle()}).foregroundColor(.black) : Button(task.name, action: {task.pending.toggle()}).foregroundColor(.gray)
+				ForEach(routines.routines) { routine in
+				   ForEach (routine.tasks){ task in
+					  Button(task.name, action: {
+						 routines.togglePending(with: routine, task: task)
+					  }).foregroundColor((task.pending) ? .black : .gray)
 				   }
 				}
 				if routines.noPendingTasks {Text("You have no tasks").bold()}
 			 }
-			 
 		  .navigationTitle("Routeens")
 		  .onAppear(perform: routines.loadActiveRoutines)
 	   }
