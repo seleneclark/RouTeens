@@ -13,7 +13,8 @@ struct ContentView: View {
 
     var body: some View {
 	   NavigationView {
-			 List{
+		  VStack {
+			List{
 				ForEach(routines.routines) { routine in
 				   ForEach (routine.tasks){ task in
 					  Button(task.name, action: {
@@ -23,8 +24,16 @@ struct ContentView: View {
 				}
 				if routines.noPendingTasks {Text("You have no tasks").bold()}
 			 }
+			 Spacer()
+			 NavigationLink{
+				RoutinesView()
+			 } label: {
+				Text("Routine Manager")
+			 }
+		  }
 		  .navigationTitle("Routeens")
 		  .onAppear(perform: routines.loadActiveRoutines)
+		  .onDisappear(perform: routines.removeRoutines)
 	   }
     }
 }

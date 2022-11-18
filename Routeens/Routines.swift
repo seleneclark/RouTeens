@@ -11,13 +11,13 @@ import SwiftUI
 class Routines: ObservableObject {
    @Published var routines = [Routine]()
    @Published var noPendingTasks = true
-   var allRoutines = [Routine]()
+   @Published var allRoutines = [Routine]()
    
    func loadActiveRoutines(){
 	  allRoutines.forEach { routine in
 		 //maybe put reset pending here, since I'm already going thru each routine
 		 // reset pending if current date is after the end of the routine lastOpened date is
-		 resetPendingTasks()
+		 resetPendingTasks(with: routine)
 	  
 		 let start = Calendar.current.dateComponents([.hour, .minute], from: routine.startTime)
 		 let end = Calendar.current.dateComponents([.hour, .minute], from: routine.endTime)
@@ -29,10 +29,19 @@ class Routines: ObservableObject {
 	  }
 	  save()
    }
+   func removeRoutines(){
+	  routines = []
+   }
    
-   func resetPendingTasks(){
+   func resetPendingTasks(with routine: Routine){
 	  // I need to reset the pending tasks IF we have moved out of the active routine
-	  // probably need a Date() for the last time it was used and then compare it to the endtime??
+	  //1. check if (Date.now > routine.lastOpened)
+	  //2.		{ set routine.lastOpened = current Date + routine.endTime }
+	  //		this is set to today's date at the end of the routine
+	  //		it should not reset the tasks if we are before the routine.endTime
+	  //		but yes, reset if the current time is AFTER the lastOpened (routine.endTime)
+	  //3. ALSO { go thru each task, and set pending to true }
+	  
    }
    
    init(){
