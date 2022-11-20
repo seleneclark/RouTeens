@@ -8,31 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
-   @StateObject var routines = Routines()
+   @StateObject var routineManager = RoutineManager()
    @State var textColor: Color = Color.black
 
     var body: some View {
 	   NavigationView {
 		  VStack {
 			List{
-				ForEach(routines.routines) { routine in
+				ForEach(routineManager.routines) { routine in
 				   ForEach (routine.tasks){ task in
 					  Button(task.name, action: {
-						 routines.togglePending(with: routine, task: task)
+						 routineManager.togglePending(with: routine, task: task)
 					  }).foregroundColor((task.pending) ? .black : .gray)
 				   }
 				}
-				if routines.noPendingTasks {Text("You have no tasks").bold()}
+				if routineManager.noPendingTasks {Text("You have no tasks").bold()}
 			 }
 			 Spacer()
 			 NavigationLink{
-				RoutinesView()
+				RoutinesView(routineManager: routineManager)
 			 } label: {
 				Text("Routine Manager")
 			 }
 		  }
 		  .navigationTitle("Routeens")
-		  .onAppear(perform: routines.loadActiveRoutines)
+		  .onAppear(perform: routineManager.loadActiveRoutines)
 //		  .onDisappear(perform: routines.removeRoutines)
 	   }
     }

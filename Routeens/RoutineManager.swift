@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-class Routines: ObservableObject {
+class RoutineManager: ObservableObject {
    @Published var routines = [Routine]()
    @Published var noPendingTasks = true
    @Published var allRoutines = [Routine]()
    
    func loadActiveRoutines(){
 	  self.routines = []
-	  
+	  noPendingTasks = true
 	  allRoutines.forEach { routine in
 		 //maybe put reset pending here, since I'm already going thru each routine
 		 // reset pending if current date is after the end of the routine lastOpened date is
@@ -78,19 +78,19 @@ class Routines: ObservableObject {
    }
    
    func togglePending(with routine: Routine, task: Task) {
-//	  print("Got to toggle pending")
-//	  print("Task pending value: ", task.pending)
+	  print("Got to toggle pending")
+	  print("Task pending value: ", task.pending)
 	  //toggle pending in the routines array - this will make it flip between grey and black
-	  for rIndex in routines.indices {
-		 if (routines[rIndex].routineName == routine.routineName) {
-			for tIndex in routines[rIndex].tasks.indices {
-			   if (routines[rIndex].tasks[tIndex].name == task.name) {
-				  routines[rIndex].tasks[tIndex].pending.toggle()
+//	  for rIndex in routines.indices {
+//		 if (routines[rIndex].routineName == routine.routineName) {
+//			for tIndex in routines[rIndex].tasks.indices {
+//			   if (routines[rIndex].tasks[tIndex].name == task.name) {
+//				  routines[rIndex].tasks[tIndex].pending.toggle()
 //				  print("Task pending value after toggle: ", routines[rIndex].tasks[tIndex].pending)
-			   }
-			}
-		 }
-	  }
+//			   }
+//			}
+//		 }
+//	  }
 	  //for some reason, when I toggle pending in routines, it doesn't save the value
 	  //so toggle pending in allRoutines as well
 	  for rIndex in allRoutines.indices {
@@ -98,12 +98,13 @@ class Routines: ObservableObject {
 			for tIndex in allRoutines[rIndex].tasks.indices {
 			   if (allRoutines[rIndex].tasks[tIndex].name == task.name) {
 				  allRoutines[rIndex].tasks[tIndex].pending.toggle()
-//				  print("Task pending value after toggle: ", allRoutines[rIndex].tasks[tIndex].pending)
+				  print("Task pending value after toggling allRoutines: ", allRoutines[rIndex].tasks[tIndex].pending)
 			   }
 			}
 		 }
 	  }
 	  save()
+	  loadActiveRoutines()
    }
 
    
