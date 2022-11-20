@@ -14,6 +14,8 @@ class Routines: ObservableObject {
    @Published var allRoutines = [Routine]()
    
    func loadActiveRoutines(){
+	  self.routines = []
+	  
 	  allRoutines.forEach { routine in
 		 //maybe put reset pending here, since I'm already going thru each routine
 		 // reset pending if current date is after the end of the routine lastOpened date is
@@ -29,6 +31,8 @@ class Routines: ObservableObject {
 	  }
 	  save()
    }
+   
+   //maybe I don't need this at all, look to delete
    func removeRoutines(){
 	  routines = []
    }
@@ -45,13 +49,14 @@ class Routines: ObservableObject {
    }
    
    init(){
+	  allRoutines = []
 	  if let data = UserDefaults.standard.data(forKey: "SavedData"){
 		 if let decoded = try? JSONDecoder().decode([Routine].self, from: data){
 			allRoutines = decoded
 			return
 		 }
 	  }
-	  allRoutines = []
+	  
 	  
 //I just want to load up the app with some tasks and routines without any data entry
 	  

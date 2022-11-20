@@ -11,13 +11,21 @@ struct Routine: Identifiable, Codable  {
    var id = UUID()
    let routineName: String
    var tasks = [Task]()
-   let startTime: Date
-   let endTime: Date
+   var startTime: Date
+   var startTimeHour: Int
+   var startTimeMinutes: Int
+   var endTime: Date
+   var endTimeHour: Int
+   var endTimeMinutes: Int
    var lastOpened: Date
    
    init (routineName: String, tasks: [Task], startTimeHour: Int, startTimeMin: Int, endTimeHour: Int, endTimeMinute: Int){
 	  self.routineName = routineName
 	  self.tasks = tasks
+	  self.startTimeHour = startTimeHour
+	  self.startTimeMinutes = startTimeMin
+	  self.endTimeHour = endTimeHour
+	  self.endTimeMinutes = endTimeMinute
 	  
 	  var startTimeComponents = DateComponents()
 	  startTimeComponents.hour = startTimeHour

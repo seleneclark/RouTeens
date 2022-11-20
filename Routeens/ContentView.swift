@@ -33,7 +33,7 @@ struct ContentView: View {
 		  }
 		  .navigationTitle("Routeens")
 		  .onAppear(perform: routines.loadActiveRoutines)
-		  .onDisappear(perform: routines.removeRoutines)
+//		  .onDisappear(perform: routines.removeRoutines)
 	   }
     }
 }

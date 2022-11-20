@@ -16,8 +16,7 @@ struct RoutinesView: View {
 		  List{
 			 ForEach(allRoutines.allRoutines) { routine in
 				NavigationLink{
-				   Text(routine.routineName)
-//				   RoutineEditorView(Routine: routine)
+				   RoutineEditorView(routine: routine)
 				} label: {
 				   Text(routine.routineName)
 				}
@@ -29,6 +28,6 @@ struct RoutinesView: View {
 
 struct RoutinesView_Previews: PreviewProvider {
     static var previews: some View {
-        RoutinesView()
+	   RoutinesView()
     }
 }

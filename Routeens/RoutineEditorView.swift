@@ -8,14 +8,33 @@
 import SwiftUI
 
 struct RoutineEditorView: View {
-//   let routine: Routine
+   @State var routine: Routine
     var body: some View {
-        Text("See an individual routine here, with start time and end time and the name")
+	   NavigationView {
+		  Form {
+			 Text("Routine Name: " + routine.routineName)
+			 DatePicker("Start Time: ", selection: $routine.startTime, displayedComponents: .hourAndMinute)
+			 DatePicker("End Time: ", selection: $routine.endTime, displayedComponents: .hourAndMinute)
+
+//   		  TextField("Start Time", text: $routine.startTimeHour)
+   //		  Text(routine.startTimeMinutes)
+   //		  Text(routine.endTimeHour)
+   //		  Text(routine.endTimeMinutes)
+		  }
+		  
+		  
+	   }
+	   .navigationTitle("Routine Manager")
+	   .navigationBarTitleDisplayMode(.inline)
+//	   .background(.darkBackground)
+	   
     }
 }
 
-struct RoutineEditorView_Previews: PreviewProvider {
-    static var previews: some View {
-        RoutineEditorView()
-    }
-}
+//struct RoutineEditorView_Previews: PreviewProvider {
+//   var allRoutines = Routines()
+//    static var previews: some View {
+//	   RoutineEditorView(routine: allRoutines[0])
+////		  .preferredColorScheme(.dark)
+//    }
+//}
