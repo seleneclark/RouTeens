@@ -17,10 +17,7 @@ class RoutineManager: ObservableObject {
 	  self.routines = []
 	  noPendingTasks = true
 	  allRoutines.forEach { routine in
-		 //maybe put reset pending here, since I'm already going thru each routine
-		 // reset pending if current date is after the end of the routine lastOpened date is
 		 resetPendingTasks(with: routine)
-	  
 		 let start = Calendar.current.dateComponents([.hour, .minute], from: routine.startTime)
 		 let end = Calendar.current.dateComponents([.hour, .minute], from: routine.endTime)
 		 let now = Calendar.current.dateComponents([.hour, .minute], from: Date.now)
@@ -45,41 +42,24 @@ class RoutineManager: ObservableObject {
 	  //		it should not reset the tasks if we are before the routine.endTime
 	  //		but yes, reset if the current time is AFTER the lastOpened (routine.endTime)
 	  //3. ALSO { go thru each task, and set pending to true }
-	  
-   }
-   
-   init(){
-	  allRoutines = []
-	  if let data = UserDefaults.standard.data(forKey: "SavedData"){
-		 if let decoded = try? JSONDecoder().decode([Routine].self, from: data){
-			allRoutines = decoded
-			return
-		 }
-	  }
-	  
-	  
-//I just want to load up the app with some tasks and routines without any data entry
-	  
-//	  var morningTasks = [Task]()
-//	  morningTasks.append(Task(name:"Brush teeth", pending: true))
-//	  morningTasks.append(Task(name:"Make bed", pending: true))
-//	  morningTasks.append(Task(name:"Take out trash", pending: false))
-//	  morningTasks.append(Task(name:"Put backpack in car", pending: true))
-//
-//	  let morningRoutine = Routine(routineName: "Morning Routine", tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
-//	  self.allRoutines.append(morningRoutine)
-//	  var afternoonTasks = [Task]()
-//	  afternoonTasks.append(Task(name:"Eat lunch", pending: true))
-//	  afternoonTasks.append(Task(name:"Walk dog", pending: true))
-//	  afternoonTasks.append(Task(name:"Empty Dishwasher", pending: false))
-//
-//	  let afternoonRoutine = Routine(routineName: "Afternoon Routine", tasks: afternoonTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
-//	  self.allRoutines.append(afternoonRoutine)
    }
    
    func togglePending(with routine: Routine, task: Task) {
-	  print("Got to toggle pending")
-	  print("Task pending value: ", task.pending)
+//	  print("Got to toggle pending")
+//	  print("Task pending value: ", task.pending)
+	  for rIndex in allRoutines.indices {
+		 if (allRoutines[rIndex].routineName == routine.routineName) {
+			for tIndex in allRoutines[rIndex].tasks.indices {
+			   if (allRoutines[rIndex].tasks[tIndex].name == task.name) {
+				  allRoutines[rIndex].tasks[tIndex].pending.toggle()
+//				  print("Task pending value after toggling allRoutines: ", allRoutines[rIndex].tasks[tIndex].pending)
+			   }
+			}
+		 }
+	  }
+	  save()
+	  loadActiveRoutines()
+	  
 	  //toggle pending in the routines array - this will make it flip between grey and black
 //	  for rIndex in routines.indices {
 //		 if (routines[rIndex].routineName == routine.routineName) {
@@ -91,29 +71,52 @@ class RoutineManager: ObservableObject {
 //			}
 //		 }
 //	  }
-	  //for some reason, when I toggle pending in routines, it doesn't save the value
-	  //so toggle pending in allRoutines as well
-	  for rIndex in allRoutines.indices {
-		 if (allRoutines[rIndex].routineName == routine.routineName) {
-			for tIndex in allRoutines[rIndex].tasks.indices {
-			   if (allRoutines[rIndex].tasks[tIndex].name == task.name) {
-				  allRoutines[rIndex].tasks[tIndex].pending.toggle()
-				  print("Task pending value after toggling allRoutines: ", allRoutines[rIndex].tasks[tIndex].pending)
-			   }
-			}
-		 }
-	  }
-	  save()
-	  loadActiveRoutines()
    }
-
+   
+   func createNewRoutine() {
+	  var startTimeComponents = DateComponents()
+	  startTimeComponents.hour = 6
+	  startTimeComponents.minute = 0
+	  let startTime = Calendar.current.date(from: startTimeComponents) ?? Date.now
+	  var endTimeComponents = DateComponents()
+	  endTimeComponents.hour = 22
+	  endTimeComponents.minute = 0
+	  let endTime = Calendar.current.date(from: endTimeComponents) ?? Date.now
+	  
+	  let newRoutine = Routine(routineName: "New Routine", tasks: [], startTime: startTime, endTime: endTime)
+	  allRoutines.append(newRoutine)
+   }
    
    func save() {
-//	  print("Got to save")
 	  if let encoded = try? JSONEncoder().encode(allRoutines) {
 		 UserDefaults.standard.set(encoded, forKey: "SavedData")
 	  }
    }
+   
+   init(){
+	  allRoutines = []
+	  if let data = UserDefaults.standard.data(forKey: "SavedData"){
+		 if let decoded = try? JSONDecoder().decode([Routine].self, from: data){
+			allRoutines = decoded
+			return
+		 }
+	  }
+//I just want to load up the app with some tasks and routines without any data entry
+//	  var morningTasks = [Task]()
+//	  morningTasks.append(Task(name:"Brush teeth", pending: true))
+//	  morningTasks.append(Task(name:"Make bed", pending: true))
+//	  morningTasks.append(Task(name:"Take out trash", pending: false))
+//	  morningTasks.append(Task(name:"Put backpack in car", pending: true))
+//	  let morningRoutine = Routine(routineName: "Morning Routine", tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
+//	  self.allRoutines.append(morningRoutine)
+//	  var afternoonTasks = [Task]()
+//	  afternoonTasks.append(Task(name:"Eat lunch", pending: true))
+//	  afternoonTasks.append(Task(name:"Walk dog", pending: true))
+//	  afternoonTasks.append(Task(name:"Empty Dishwasher", pending: false))
+//	  let afternoonRoutine = Routine(routineName: "Afternoon Routine", tasks: afternoonTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
+//	  self.allRoutines.append(afternoonRoutine)
+   }
+   
 }
 
 extension DateComponents: Comparable {

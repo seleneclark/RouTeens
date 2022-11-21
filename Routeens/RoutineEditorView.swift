@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct RoutineEditorView: View {
-//   @ObservedObject var routineManager: RoutineManager
    @ObservedObject var routine: Routine
-   
    
     var body: some View {
 	   NavigationView {
@@ -23,7 +21,6 @@ struct RoutineEditorView: View {
 	   }
 	   .navigationTitle("Routine Manager")
 	   .navigationBarTitleDisplayMode(.inline)
-	   
 //	   .background(.darkBackground)
 	   
     }

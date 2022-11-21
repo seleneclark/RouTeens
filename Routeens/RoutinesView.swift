@@ -9,8 +9,10 @@ import SwiftUI
 
 struct RoutinesView: View {
    @ObservedObject var routineManager: RoutineManager
+   @State private var isShowingAddRoutineView = false
    
     var body: some View {
+	   
 	   VStack {
 		  Text("Routine Manager")
 		  List{
@@ -22,13 +24,16 @@ struct RoutinesView: View {
 				}
 			 }
 		  }
-//		  NavigationLink{
-//			 RoutineEditorView(routineManager: routineManager, routine: Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date()))
-//		  } label: {
-//			 Text("Add a Routine")
-//		  }
+		  NavigationLink(destination: RoutineEditorView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
+		  Button("Add a Routine") {
+			 routineManager.createNewRoutine()
+			 routineManager.save()
+			 isShowingAddRoutineView = true
+		  }
 	   }
+	   
     }
+   
 }
 
 struct RoutinesView_Previews: PreviewProvider {
@@ -36,3 +41,4 @@ struct RoutinesView_Previews: PreviewProvider {
 	   RoutinesView(routineManager: RoutineManager())
     }
 }
+
