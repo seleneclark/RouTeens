@@ -26,7 +26,7 @@ struct ContentView: View {
 			 }
 			 Spacer()
 			 NavigationLink{
-				RoutinesView(routineManager: routineManager)
+				RoutineManagerView(routineManager: routineManager)
 			 } label: {
 				Text("Routine Manager")
 			 }

@@ -9,6 +9,6 @@ import Foundation
 
 struct Task: Identifiable, Codable {
    var id = UUID()
-   let name: String
+   var name: String
    var pending: Bool
 }

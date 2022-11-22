@@ -7,24 +7,29 @@
 
 import SwiftUI
 
-struct RoutinesView: View {
+struct RoutineManagerView: View {
    @ObservedObject var routineManager: RoutineManager
    @State private var isShowingAddRoutineView = false
    
     var body: some View {
 	   
 	   VStack {
-		  Text("Routine Manager")
 		  List{
 			 ForEach(routineManager.allRoutines) { routine in
 				NavigationLink{
-				   RoutineEditorView(routine: routine)
+				   EditRoutineView(routine: routine)
 				} label: {
 				   Text(routine.routineName)
 				}
 			 }
+			 .onDelete(perform: removeItems)
+
 		  }
-		  NavigationLink(destination: RoutineEditorView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
+		  .navigationTitle("Routine Manager")
+		  .navigationBarTitleDisplayMode(.inline)
+//   	  .background(.darkBackground)
+		  
+		  NavigationLink(destination: EditRoutineView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
 		  Button("Add a Routine") {
 			 routineManager.createNewRoutine()
 			 routineManager.save()
@@ -33,12 +38,15 @@ struct RoutinesView: View {
 	   }
 	   
     }
-   
+   func removeItems(at offsets: IndexSet){
+	  routineManager.allRoutines.remove(atOffsets: offsets)
+	  routineManager.save()
+   }
 }
 
 struct RoutinesView_Previews: PreviewProvider {
     static var previews: some View {
-	   RoutinesView(routineManager: RoutineManager())
+	   RoutineManagerView(routineManager: RoutineManager())
     }
 }
 
