@@ -35,6 +35,7 @@ struct RoutineManagerView: View {
 			 routineManager.save()
 			 isShowingAddRoutineView = true
 		  }
+		  .padding()
 	   }
 	   
     }

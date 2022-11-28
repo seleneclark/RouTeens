@@ -9,29 +9,37 @@ import SwiftUI
 
 struct EditRoutineView: View {
    @ObservedObject var routine: Routine
+   @State private var newTaskName: String = ""
    
     var body: some View {
 	   Form {
-		  TextField("Routine Name:", text: $routine.routineName)
-		  DatePicker("Start Time: ", selection: $routine.startTime, displayedComponents: .hourAndMinute)
-		  DatePicker("End Time: ", selection: $routine.endTime, displayedComponents: .hourAndMinute)
-		  List{
-			 Text("Tasks:").bold()
-			 ForEach(routine.tasks){ task in
-				Text(task.name)
+		  Section {
+			 TextField("Routine Name:", text: $routine.routineName)
+			 DatePicker("Start Time: ", selection: $routine.startTime, displayedComponents: .hourAndMinute)
+			 DatePicker("End Time: ", selection: $routine.endTime, displayedComponents: .hourAndMinute)
+		  }header: {
+			 Text("Current Routine")
+	  }
+		  Section {
+			 List{
+				ForEach(routine.tasks){ task in
+				   Text(task.name)
+				}
+				.onDelete(perform: removeItems)
+				TextField("New task", text: $newTaskName)
 			 }
-			 .onDelete(perform: removeItems)
+//			 .listStyle(.insetGrouped)
+		  }header: {
+	   			 Text("Tasks")
 		  }
-		  
-		  //		  .padding()
 	   }
+
 	   .navigationTitle("Edit Routine")
 	   .navigationBarTitleDisplayMode(.inline)
 //   //	   .background(.darkBackground)
 	   Button("Add a Task") {
-//		  routineManager.createNewRoutine()
-//		  routineManager.save()
-//		  isShowingAddRoutineView = true
+		  let task = Task(name: newTaskName, pending: true)
+		  routine.tasks.append(task)
 	   }
     }
    func removeItems(at offsets: IndexSet){

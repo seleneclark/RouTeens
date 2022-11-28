@@ -28,7 +28,7 @@ struct ContentView: View {
 			 NavigationLink{
 				RoutineManagerView(routineManager: routineManager)
 			 } label: {
-				Text("Routine Manager")
+				Text("Routine Manager").padding()
 			 }
 		  }
 		  .navigationTitle("Routeens")
