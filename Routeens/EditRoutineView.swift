@@ -19,16 +19,28 @@ struct EditRoutineView: View {
 			 DatePicker("End Time: ", selection: $routine.endTime, displayedComponents: .hourAndMinute)
 		  }header: {
 			 Text("Current Routine")
-	  }
+		  }
 		  Section {
 			 List{
 				ForEach(routine.tasks){ task in
 				   Text(task.name)
 				}
 				.onDelete(perform: removeItems)
-				TextField("New task", text: $newTaskName)
+				HStack{
+				   Button {
+					  let task = Task(name: newTaskName, pending: true)
+					  routine.tasks.append(task)
+					  routine.objectWillChange.send()
+					  newTaskName = ""
+				   } label: {
+					  Image(systemName: "plus.circle.fill")
+									  .foregroundColor(.green)
+									  .padding(.leading, 0)
+									  .font(.system(size: 18))
+		 		  }
+				   TextField("New task", text: $newTaskName)
+				}
 			 }
-//			 .listStyle(.insetGrouped)
 		  }header: {
 	   			 Text("Tasks")
 		  }
@@ -37,13 +49,11 @@ struct EditRoutineView: View {
 	   .navigationTitle("Edit Routine")
 	   .navigationBarTitleDisplayMode(.inline)
 //   //	   .background(.darkBackground)
-	   Button("Add a Task") {
-		  let task = Task(name: newTaskName, pending: true)
-		  routine.tasks.append(task)
-	   }
+
     }
    func removeItems(at offsets: IndexSet){
 	  routine.tasks.remove(atOffsets: offsets)
+	  routine.objectWillChange.send()
 //	  routineManager.save()
    }
 }

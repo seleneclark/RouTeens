@@ -36,6 +36,7 @@ struct RoutineManagerView: View {
 			 isShowingAddRoutineView = true
 		  }
 		  .padding()
+		  .onAppear(perform: routineManager.loadActiveRoutines)
 	   }
 	   
     }
