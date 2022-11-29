@@ -27,6 +27,7 @@ struct EditRoutineView: View {
 				}
 				.onDelete(perform: removeItems)
 				HStack{
+				   TextField("New task", text: $newTaskName)
 				   Button {
 					  let task = Task(name: newTaskName, pending: true)
 					  routine.tasks.append(task)
@@ -37,9 +38,8 @@ struct EditRoutineView: View {
 									  .foregroundColor(.green)
 									  .padding(.leading, 0)
 									  .font(.system(size: 18))
-		 		  }
-				   TextField("New task", text: $newTaskName)
-				}
+		 		   }
+			    }
 			 }
 		  }header: {
 	   			 Text("Tasks")

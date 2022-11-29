@@ -30,9 +30,9 @@ class RoutineManager: ObservableObject {
    }
    
    //maybe I don't need this at all, look to delete
-   func removeRoutines(){
-	  routines = []
-   }
+//   func removeRoutines(){
+//	  routines = []
+//   }
    
    func resetPendingTasks(with routine: Routine){
 	  // I need to reset the pending tasks IF we have moved out of the active routine
@@ -59,18 +59,6 @@ class RoutineManager: ObservableObject {
 	  }
 	  save()
 	  loadActiveRoutines()
-	  
-	  //toggle pending in the routines array - this will make it flip between grey and black
-//	  for rIndex in routines.indices {
-//		 if (routines[rIndex].routineName == routine.routineName) {
-//			for tIndex in routines[rIndex].tasks.indices {
-//			   if (routines[rIndex].tasks[tIndex].name == task.name) {
-//				  routines[rIndex].tasks[tIndex].pending.toggle()
-//				  print("Task pending value after toggle: ", routines[rIndex].tasks[tIndex].pending)
-//			   }
-//			}
-//		 }
-//	  }
    }
    
    func createNewRoutine() {
@@ -101,22 +89,7 @@ class RoutineManager: ObservableObject {
 			return
 		 }
 	  }
-//I just want to load up the app with some tasks and routines without any data entry
-//	  var morningTasks = [Task]()
-//	  morningTasks.append(Task(name:"Brush teeth", pending: true))
-//	  morningTasks.append(Task(name:"Make bed", pending: true))
-//	  morningTasks.append(Task(name:"Take out trash", pending: false))
-//	  morningTasks.append(Task(name:"Put backpack in car", pending: true))
-//	  let morningRoutine = Routine(routineName: "Morning Routine", tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
-//	  self.allRoutines.append(morningRoutine)
-//	  var afternoonTasks = [Task]()
-//	  afternoonTasks.append(Task(name:"Eat lunch", pending: true))
-//	  afternoonTasks.append(Task(name:"Walk dog", pending: true))
-//	  afternoonTasks.append(Task(name:"Empty Dishwasher", pending: false))
-//	  let afternoonRoutine = Routine(routineName: "Afternoon Routine", tasks: afternoonTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
-//	  self.allRoutines.append(afternoonRoutine)
    }
-   
 }
 
 extension DateComponents: Comparable {
@@ -148,3 +121,32 @@ extension DateComponents: Comparable {
 //	  print(taskPending)
 //	  _ = Task(id: task.id, name: task.name, pending: taskPending)
 //	  print("Task pending changed: ", task.pending)
+
+
+//I just want to load up the app with some tasks and routines without any data entry
+//	  var morningTasks = [Task]()
+//	  morningTasks.append(Task(name:"Brush teeth", pending: true))
+//	  morningTasks.append(Task(name:"Make bed", pending: true))
+//	  morningTasks.append(Task(name:"Take out trash", pending: false))
+//	  morningTasks.append(Task(name:"Put backpack in car", pending: true))
+//	  let morningRoutine = Routine(routineName: "Morning Routine", tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
+//	  self.allRoutines.append(morningRoutine)
+//	  var afternoonTasks = [Task]()
+//	  afternoonTasks.append(Task(name:"Eat lunch", pending: true))
+//	  afternoonTasks.append(Task(name:"Walk dog", pending: true))
+//	  afternoonTasks.append(Task(name:"Empty Dishwasher", pending: false))
+//	  let afternoonRoutine = Routine(routineName: "Afternoon Routine", tasks: afternoonTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
+//	  self.allRoutines.append(afternoonRoutine)
+
+
+//toggle pending in the routines array - this will make it flip between grey and black
+//	  for rIndex in routines.indices {
+//		 if (routines[rIndex].routineName == routine.routineName) {
+//			for tIndex in routines[rIndex].tasks.indices {
+//			   if (routines[rIndex].tasks[tIndex].name == task.name) {
+//				  routines[rIndex].tasks[tIndex].pending.toggle()
+//				  print("Task pending value after toggle: ", routines[rIndex].tasks[tIndex].pending)
+//			   }
+//			}
+//		 }
+//	  }

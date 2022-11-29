@@ -34,6 +34,9 @@ class Routine: Identifiable, Codable, ObservableObject  {
 	  self.endTimeMinutes = 0
    }
 
+   
+   
+   
 //   init (routineName: String, tasks: [Task], startTimeHour: Int, startTimeMin: Int, endTimeHour: Int, endTimeMinute: Int){
 //	  self.routineName = routineName
 //	  self.tasks = tasks

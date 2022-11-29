@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		640EF1C929357E4E00291558 /* UtilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640EF1C829357E4E00291558 /* UtilitiesView.swift */; };
 		64616D73291330C60017D1C7 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64616D72291330C60017D1C7 /* Routine.swift */; };
 		64616D75291331A90017D1C7 /* RoutineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64616D74291331A90017D1C7 /* RoutineManager.swift */; };
 		64FBC62229131C4400879F79 /* RouteensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FBC62129131C4400879F79 /* RouteensApp.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		640EF1C829357E4E00291558 /* UtilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilitiesView.swift; sourceTree = "<group>"; };
 		64616D72291330C60017D1C7 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		64616D74291331A90017D1C7 /* RoutineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineManager.swift; sourceTree = "<group>"; };
 		64FBC61E29131C4400879F79 /* Routeens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Routeens.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +65,7 @@
 			children = (
 				64FBC62129131C4400879F79 /* RouteensApp.swift */,
 				64FBC62329131C4400879F79 /* ContentView.swift */,
+				640EF1C829357E4E00291558 /* UtilitiesView.swift */,
 				64FCFA802927293100704061 /* RoutineManagerView.swift */,
 				64FCFA8229272CFC00704061 /* EditRoutineView.swift */,
 				64616D74291331A90017D1C7 /* RoutineManager.swift */,
@@ -158,6 +161,7 @@
 				64FBC62429131C4400879F79 /* ContentView.swift in Sources */,
 				64FBC630291320A300879F79 /* Task.swift in Sources */,
 				64616D73291330C60017D1C7 /* Routine.swift in Sources */,
+				640EF1C929357E4E00291558 /* UtilitiesView.swift in Sources */,
 				64FBC62229131C4400879F79 /* RouteensApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

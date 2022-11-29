@@ -13,7 +13,7 @@ struct RoutineManagerView: View {
    
     var body: some View {
 	   
-	   VStack {
+	   Section {
 		  List{
 			 ForEach(routineManager.allRoutines) { routine in
 				NavigationLink{
@@ -23,22 +23,41 @@ struct RoutineManagerView: View {
 				}
 			 }
 			 .onDelete(perform: removeItems)
-
+			 HStack{
+				Text("Add a New Routine").foregroundColor(.gray)
+				NavigationLink(destination: EditRoutineView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
+				Button (""){
+				   routineManager.createNewRoutine()
+				   routineManager.save()
+				   isShowingAddRoutineView = true
+				} //label: {
+//				   Image(systemName: "plus.circle.fill")
+//								   .foregroundColor(.green)
+//								   .padding(.leading, 0)
+//								   .font(.system(size: 18))
+//				}
+				.foregroundColor(.gray)
+			 }
 		  }
 		  .navigationTitle("Routine Manager")
 		  .navigationBarTitleDisplayMode(.inline)
 //   	  .background(.darkBackground)
 		  
-		  NavigationLink(destination: EditRoutineView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
-		  Button("Add a Routine") {
-			 routineManager.createNewRoutine()
-			 routineManager.save()
-			 isShowingAddRoutineView = true
-		  }
+		  
+		  
+//		  NavigationLink(destination: EditRoutineView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
+//		  Button("Add a Routine") {
+//			 routineManager.createNewRoutine()
+//			 routineManager.save()
+//			 isShowingAddRoutineView = true
+//		  }
 		  .padding()
 		  .onAppear(perform: routineManager.loadActiveRoutines)
+	   } header: {
+			Text("These are all the routines.  Add a new one, make changes, or delete.")
+			 .padding()
+			 .foregroundColor(.gray)
 	   }
-	   
     }
    func removeItems(at offsets: IndexSet){
 	  routineManager.allRoutines.remove(atOffsets: offsets)

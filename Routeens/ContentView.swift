@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
    @StateObject var routineManager = RoutineManager()
    @State var textColor: Color = Color.black
+   @State private var showingUtilities = false
 
     var body: some View {
 	   NavigationView {
@@ -33,7 +34,18 @@ struct ContentView: View {
 		  }
 		  .navigationTitle("Routeens")
 		  .onAppear(perform: routineManager.loadActiveRoutines)
-//		  .onDisappear(perform: routines.removeRoutines)
+		  .toolbar {
+			 Button {
+				showingUtilities = true
+			 } label: {
+				Image(systemName: "gear")
+			 }
+		  }
+		  .sheet(isPresented: $showingUtilities) {
+			 UtilitiesView()
+		  }
+		  
+		  
 	   }
     }
 }
