@@ -9,51 +9,44 @@ import SwiftUI
 import UserNotifications
 
 struct UtilitiesView: View {
-   @State private var notificationState:Bool = false
+   @State  var notificationState:Bool = false
    @Environment(\.dismiss) var dismiss
 
+   //need to save this notificatinoState somewhere. probably the best place is
+   // save it in RoutineManager and pass it to this utilities page.
+   // right now, this is resetting to false every time you open the page
    
     var body: some View {
-	   Section {
-		  Text("Notifications").bold().padding()
-		  Toggle(isOn: $notificationState, label: {
-			 Text("Notifications allowed")
-		  }).padding()
-		  Button ("Request Permission"){
-			 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-				 if success {
-					 print("All set!")
-				 } else if let error = error {
-					 print(error.localizedDescription)
-					notificationState = false
-				 }
+	   NavigationView {
+		  VStack {
+			 Toggle(isOn: $notificationState, label: {
+				Text("Notifications allowed")
+			 }).padding()
+			.onChange(of: notificationState){ value in
+			   print(value)
+			   if (value == true) {
+				  UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+					  if success {
+						  print("All set!")
+					  } else if let error = error {
+						  print(error.localizedDescription)
+						 notificationState = false
+					  }
+				  }
+			   } else {
+				  UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+			   }
+			}
+			Spacer()
+		  }
+		  .navigationTitle("Notifications")
+		  .navigationBarTitleDisplayMode(.inline)
+		  .toolbar {
+			 Button("Done"){
+				dismiss()
 			 }
 		  }
-		  
-		  //I probably need to put this notification code in Routine Manager I think
-		  Button("Schedule Notification"){
-			 let content = UNMutableNotificationContent()
-			 content.title = "Feed the cat"
-			 content.subtitle = "It looks hungry"
-			 content.sound = UNNotificationSound.default
-
-			 // show this notification five seconds from now
-			 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-
-			 // choose a random identifier
-			 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-			 // add our notification request
-			 UNUserNotificationCenter.current().add(request)
-		  }
-		  
-		  Spacer()
-		  Button("Done"){
-			 dismiss()
-		  }
-		  Spacer()
 	   }
-        
     }
 }
 

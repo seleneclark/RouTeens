@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import UserNotifications
 
 class RoutineManager: ObservableObject {
    @Published var routines = [Routine]()
    @Published var noPendingTasks = true
    @Published var allRoutines = [Routine]()
+   @Published var notificationState = false
    
    func loadActiveRoutines(){
 	  self.routines = []
@@ -29,11 +31,6 @@ class RoutineManager: ObservableObject {
 	  save()
    }
    
-   //maybe I don't need this at all, look to delete
-//   func removeRoutines(){
-//	  routines = []
-//   }
-   
    func resetPendingTasks(with routine: Routine){
 	  // I need to reset the pending tasks IF we have moved out of the active routine
 	  //1. check if (Date.now > routine.lastOpened)
@@ -45,14 +42,11 @@ class RoutineManager: ObservableObject {
    }
    
    func togglePending(with routine: Routine, task: Task) {
-//	  print("Got to toggle pending")
-//	  print("Task pending value: ", task.pending)
 	  for rIndex in allRoutines.indices {
 		 if (allRoutines[rIndex].routineName == routine.routineName) {
 			for tIndex in allRoutines[rIndex].tasks.indices {
 			   if (allRoutines[rIndex].tasks[tIndex].name == task.name) {
 				  allRoutines[rIndex].tasks[tIndex].pending.toggle()
-//				  print("Task pending value after toggling allRoutines: ", allRoutines[rIndex].tasks[tIndex].pending)
 			   }
 			}
 		 }
@@ -76,8 +70,31 @@ class RoutineManager: ObservableObject {
    }
    
    func save() {
+	  // Prep to save/initialize notifications
+//	  struct SaveTypes: Codable {
+//		 var saveRoutines:[Routine]
+//		 var saveNotification:Bool
+//	  }
+//	  let saveTypes = SaveTypes(saveRoutines: allRoutines, saveNotification: notificationState )
+//	  if let encoded = try? JSONEncoder().encode(saveTypes) {
+//		 UserDefaults.standard.set(encoded, forKey: "SavedData")
+//	  }
 	  if let encoded = try? JSONEncoder().encode(allRoutines) {
 		 UserDefaults.standard.set(encoded, forKey: "SavedData")
+	  }
+   }
+   
+   func userNotifications(){
+	  // Notifications are sent whenever a routine begins
+	  let content = UNMutableNotificationContent()
+	  allRoutines.forEach { routine in
+		 content.title = "RouTeens"
+		 content.subtitle = "Time for your " + routine.routineName
+		 content.sound = UNNotificationSound.default
+		 let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: routine.startTime)
+		 let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+		 let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+		 UNUserNotificationCenter.current().add(request)
 	  }
    }
    
@@ -89,6 +106,13 @@ class RoutineManager: ObservableObject {
 			return
 		 }
 	  }
+	  // Prep to save/initialize notifications
+//	  if let data = UserDefaults.standard.data(forKey: "SavedData"){
+//		 if let decoded = try? JSONDecoder().decode([Routine].self, from: data){
+//			allRoutines = decoded
+//			return
+//		 }
+//	  }
    }
 }
 

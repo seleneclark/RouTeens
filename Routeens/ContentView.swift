@@ -33,12 +33,15 @@ struct ContentView: View {
 			 }
 		  }
 		  .navigationTitle("Routeens")
-		  .onAppear(perform: routineManager.loadActiveRoutines)
+		  .onAppear{
+			 routineManager.loadActiveRoutines()
+			 routineManager.userNotifications()
+		  }
 		  .toolbar {
 			 Button {
 				showingUtilities = true
 			 } label: {
-				Image(systemName: "gear")
+				Image(systemName: "gearshape.fill")
 			 }
 		  }
 		  .sheet(isPresented: $showingUtilities) {

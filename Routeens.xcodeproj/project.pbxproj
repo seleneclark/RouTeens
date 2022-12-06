@@ -65,9 +65,9 @@
 			children = (
 				64FBC62129131C4400879F79 /* RouteensApp.swift */,
 				64FBC62329131C4400879F79 /* ContentView.swift */,
-				640EF1C829357E4E00291558 /* UtilitiesView.swift */,
 				64FCFA802927293100704061 /* RoutineManagerView.swift */,
 				64FCFA8229272CFC00704061 /* EditRoutineView.swift */,
+				640EF1C829357E4E00291558 /* UtilitiesView.swift */,
 				64616D74291331A90017D1C7 /* RoutineManager.swift */,
 				64616D72291330C60017D1C7 /* Routine.swift */,
 				64FBC62F291320A300879F79 /* Task.swift */,
