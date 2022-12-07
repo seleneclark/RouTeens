@@ -9,17 +9,19 @@ import Foundation
 import SwiftUI
 import UserNotifications
 
+struct Preferences: Codable {
+   var savedRoutines:[Routine]
+   var areNotificationsOn:Bool
+}
+
+
 class RoutineManager: ObservableObject {
    @Published var routines = [Routine]()
    @Published var noPendingTasks = true
    @Published var allRoutines = [Routine]()
-   
-   // need to save this
-   @Published var notificationState = false
-   
-   //don't need to save this
    @Published var tasksComplete:Bool = false
    @Published var confetti:Int = 0
+   @Published var notificationState = false
    
    func loadActiveRoutines(){
 	  self.routines = []
@@ -36,15 +38,25 @@ class RoutineManager: ObservableObject {
 	  }
 	  save()
    }
-   
+
    func resetPendingTasks(with routine: Routine){
-	  // I need to reset the pending tasks IF we have moved out of the active routine
-	  //1. check if (Date.now > routine.lastOpened)
-	  //2.		{ set routine.lastOpened = current Date + routine.endTime }
-	  //		this is set to today's date at the end of the routine
-	  //		it should not reset the tasks if we are before the routine.endTime
-	  //		but yes, reset if the current time is AFTER the lastOpened (routine.endTime)
-	  //3. ALSO { go thru each task, and set pending to true }
+	  let currentDate = Date.now
+	  if (currentDate > routine.lastOpened){
+		 let currentDate = Date.now
+		 let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: currentDate)
+		 let endTimeComponents = Calendar.current.dateComponents([.hour, .minute], from: routine.endTime)
+		 var newDateComponents = DateComponents()
+		 newDateComponents.year = dateComponents.year
+		 newDateComponents.month = dateComponents.month
+		 newDateComponents.day = dateComponents.day
+		 newDateComponents.hour = endTimeComponents.hour
+		 newDateComponents.minute = endTimeComponents.minute
+		 routine.lastOpened = Calendar.current.date(from: newDateComponents) ?? Date.now
+		 
+		 for i in routine.tasks.indices {
+			routine.tasks[i].pending = true
+		 }
+	  }
    }
    
    func togglePending(with routine: Routine, task: Task) {
@@ -62,6 +74,8 @@ class RoutineManager: ObservableObject {
 			}
 		 }
 	  }
+	  // When all the tasks are complete, set these published variables to
+	  // trigger the alert and confetti in ContentView
 	  if (checkTasksComplete == true){
 		 tasksComplete = true
 		 confetti += 1
@@ -86,18 +100,14 @@ class RoutineManager: ObservableObject {
    }
    
    func save() {
-	  // Prep to save/initialize notifications
-//	  struct SaveTypes: Codable {
-//		 var saveRoutines:[Routine]
-//		 var saveNotification:Bool
-//	  }
-//	  let saveTypes = SaveTypes(saveRoutines: allRoutines, saveNotification: notificationState )
-//	  if let encoded = try? JSONEncoder().encode(saveTypes) {
-//		 UserDefaults.standard.set(encoded, forKey: "SavedData")
-//	  }
-	  if let encoded = try? JSONEncoder().encode(allRoutines) {
+
+	  let preferences = Preferences(savedRoutines: allRoutines, areNotificationsOn: notificationState )
+	  if let encoded = try? JSONEncoder().encode(preferences) {
 		 UserDefaults.standard.set(encoded, forKey: "SavedData")
 	  }
+//	  if let encoded = try? JSONEncoder().encode(allRoutines) {
+//		 UserDefaults.standard.set(encoded, forKey: "BackupData")
+//	  }
    }
    
    func userNotifications(){
@@ -116,19 +126,14 @@ class RoutineManager: ObservableObject {
    
    init(){
 	  allRoutines = []
+	  // Prep to save/initialize notifications
 	  if let data = UserDefaults.standard.data(forKey: "SavedData"){
-		 if let decoded = try? JSONDecoder().decode([Routine].self, from: data){
-			allRoutines = decoded
+		 if let decoded = try? JSONDecoder().decode(Preferences.self, from: data){
+			allRoutines = decoded.savedRoutines
+			notificationState = decoded.areNotificationsOn
 			return
 		 }
 	  }
-	  // Prep to save/initialize notifications
-//	  if let data = UserDefaults.standard.data(forKey: "SavedData"){
-//		 if let decoded = try? JSONDecoder().decode([Routine].self, from: data){
-//			allRoutines = decoded
-//			return
-//		 }
-//	  }
    }
 }
 
@@ -139,54 +144,3 @@ extension DateComponents: Comparable {
 		return calendar.date(byAdding: lhs, to: now)! < calendar.date(byAdding: rhs, to: now)!
 	}
 }
-
-
-//	  print("Task name: ",allRoutines[1].tasks[0].name)
-//	  allRoutines[1].tasks[0].pending.toggle()
-//	  print("Task pending value: ", task.pending)
-//	  var tempRoutine = Routine(routineName: "", tasks: routine.tasks, startTimeHour: 0, startTimeMin: 0, endTimeHour: 0, endTimeMinute: 0)
-	  
-//	  print("Task name: ",tempRoutine.tasks[0].name)
-//	  for i in tempRoutine.tasks.enumerated() {
-//		 print(tempRoutine.tasks[i].name)
-//	  }
-//	  tempRoutine.tasks.forEach { tempTask in
-//		 if (tempTask.name == task.name) {
-//			tempTask.pending.toggle()
-//		 }
-//	  }
-	  
-	  
-//	  let taskPending = !task.pending
-//	  print(taskPending)
-//	  _ = Task(id: task.id, name: task.name, pending: taskPending)
-//	  print("Task pending changed: ", task.pending)
-
-
-//I just want to load up the app with some tasks and routines without any data entry
-//	  var morningTasks = [Task]()
-//	  morningTasks.append(Task(name:"Brush teeth", pending: true))
-//	  morningTasks.append(Task(name:"Make bed", pending: true))
-//	  morningTasks.append(Task(name:"Take out trash", pending: false))
-//	  morningTasks.append(Task(name:"Put backpack in car", pending: true))
-//	  let morningRoutine = Routine(routineName: "Morning Routine", tasks: morningTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
-//	  self.allRoutines.append(morningRoutine)
-//	  var afternoonTasks = [Task]()
-//	  afternoonTasks.append(Task(name:"Eat lunch", pending: true))
-//	  afternoonTasks.append(Task(name:"Walk dog", pending: true))
-//	  afternoonTasks.append(Task(name:"Empty Dishwasher", pending: false))
-//	  let afternoonRoutine = Routine(routineName: "Afternoon Routine", tasks: afternoonTasks, startTimeHour: 6, startTimeMin: 0, endTimeHour: 23, endTimeMinute: 0)
-//	  self.allRoutines.append(afternoonRoutine)
-
-
-//toggle pending in the routines array - this will make it flip between grey and black
-//	  for rIndex in routines.indices {
-//		 if (routines[rIndex].routineName == routine.routineName) {
-//			for tIndex in routines[rIndex].tasks.indices {
-//			   if (routines[rIndex].tasks[tIndex].name == task.name) {
-//				  routines[rIndex].tasks[tIndex].pending.toggle()
-//				  print("Task pending value after toggle: ", routines[rIndex].tasks[tIndex].pending)
-//			   }
-//			}
-//		 }
-//	  }

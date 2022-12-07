@@ -30,27 +30,12 @@ struct RoutineManagerView: View {
 				   routineManager.createNewRoutine()
 				   routineManager.save()
 				   isShowingAddRoutineView = true
-				} //label: {
-//				   Image(systemName: "plus.circle.fill")
-//								   .foregroundColor(.green)
-//								   .padding(.leading, 0)
-//								   .font(.system(size: 18))
-//				}
+				}
 				.foregroundColor(.gray)
 			 }
 		  }
 		  .navigationTitle("Routine Manager")
 		  .navigationBarTitleDisplayMode(.inline)
-//   	  .background(.darkBackground)
-		  
-		  
-		  
-//		  NavigationLink(destination: EditRoutineView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
-//		  Button("Add a Routine") {
-//			 routineManager.createNewRoutine()
-//			 routineManager.save()
-//			 isShowingAddRoutineView = true
-//		  }
 		  .padding()
 		  .onAppear(perform: routineManager.loadActiveRoutines)
 	   } header: {

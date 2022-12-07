@@ -47,7 +47,6 @@ struct ContentView: View {
 			 }
 		  }
 		  .alert("Congratulations!", isPresented: $routineManager.tasksComplete, actions: {
-//			 confetti += 1
 		  }, message: {Text("You completed a routine!")})
 		  .confettiCannon(
 			counter: $routineManager.confetti,
@@ -56,7 +55,7 @@ struct ContentView: View {
 			radius: 400
 		  )
 		  .sheet(isPresented: $showingUtilities) {
-			 UtilitiesView()
+			 UtilitiesView(routineManager: routineManager)
 		  }
 	   }
     }

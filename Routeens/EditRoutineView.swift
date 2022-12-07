@@ -48,13 +48,10 @@ struct EditRoutineView: View {
 
 	   .navigationTitle("Edit Routine")
 	   .navigationBarTitleDisplayMode(.inline)
-//   //	   .background(.darkBackground)
-
     }
    func removeItems(at offsets: IndexSet){
 	  routine.tasks.remove(atOffsets: offsets)
 	  routine.objectWillChange.send()
-//	  routineManager.save()
    }
 }
 
