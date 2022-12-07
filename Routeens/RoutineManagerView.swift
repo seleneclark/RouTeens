@@ -24,7 +24,7 @@ struct RoutineManagerView: View {
 			 }
 			 .onDelete(perform: removeItems)
 			 HStack{
-				Text("Add a New Routine").foregroundColor(.gray)
+				Text("Add Routine").foregroundColor(.gray)
 				NavigationLink(destination: EditRoutineView(routine: routineManager.allRoutines.last ?? Routine(routineName: "", tasks: [], startTime: Date(), endTime: Date())), isActive: $isShowingAddRoutineView){ EmptyView() }
 				Button (""){
 				   routineManager.createNewRoutine()
@@ -54,7 +54,7 @@ struct RoutineManagerView: View {
 		  .padding()
 		  .onAppear(perform: routineManager.loadActiveRoutines)
 	   } header: {
-			Text("These are all the routines.  Add a new one, make changes, or delete.")
+			Text("Add a new routine, make changes, or delete.")
 			 .padding()
 			 .foregroundColor(.gray)
 	   }

@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct ContentView: View {
    @StateObject var routineManager = RoutineManager()
    @State var textColor: Color = Color.black
    @State private var showingUtilities = false
+   @State private var confetti:Int = 0
 
     var body: some View {
 	   NavigationView {
@@ -44,11 +46,18 @@ struct ContentView: View {
 				Image(systemName: "gearshape.fill")
 			 }
 		  }
+		  .alert("Congratulations!", isPresented: $routineManager.tasksComplete, actions: {
+//			 confetti += 1
+		  }, message: {Text("You completed a routine!")})
+		  .confettiCannon(
+			counter: $routineManager.confetti,
+			num: 100,
+			rainHeight: 1000,
+			radius: 400
+		  )
 		  .sheet(isPresented: $showingUtilities) {
 			 UtilitiesView()
 		  }
-		  
-		  
 	   }
     }
 }

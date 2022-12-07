@@ -17,6 +17,7 @@
 		64FBC630291320A300879F79 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FBC62F291320A300879F79 /* Task.swift */; };
 		64FCFA812927293100704061 /* RoutineManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FCFA802927293100704061 /* RoutineManagerView.swift */; };
 		64FCFA8329272CFC00704061 /* EditRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FCFA8229272CFC00704061 /* EditRoutineView.swift */; };
+		64FD7018294003BD00F81154 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 64FD7017294003BD00F81154 /* ConfettiSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64FD7018294003BD00F81154 /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +103,9 @@
 			dependencies = (
 			);
 			name = Routeens;
+			packageProductDependencies = (
+				64FD7017294003BD00F81154 /* ConfettiSwiftUI */,
+			);
 			productName = Routeens;
 			productReference = 64FBC61E29131C4400879F79 /* Routeens.app */;
 			productType = "com.apple.product-type.application";
@@ -129,6 +134,9 @@
 				Base,
 			);
 			mainGroup = 64FBC61529131C4400879F79;
+			packageReferences = (
+				64FD7016294003BD00F81154 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = 64FBC61F29131C4400879F79 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -369,6 +377,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		64FD7016294003BD00F81154 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		64FD7017294003BD00F81154 /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64FD7016294003BD00F81154 /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 64FBC61629131C4400879F79 /* Project object */;
 }

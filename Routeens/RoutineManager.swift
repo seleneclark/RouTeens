@@ -13,7 +13,13 @@ class RoutineManager: ObservableObject {
    @Published var routines = [Routine]()
    @Published var noPendingTasks = true
    @Published var allRoutines = [Routine]()
+   
+   // need to save this
    @Published var notificationState = false
+   
+   //don't need to save this
+   @Published var tasksComplete:Bool = false
+   @Published var confetti:Int = 0
    
    func loadActiveRoutines(){
 	  self.routines = []
@@ -42,14 +48,24 @@ class RoutineManager: ObservableObject {
    }
    
    func togglePending(with routine: Routine, task: Task) {
+	  var checkTasksComplete = true
 	  for rIndex in allRoutines.indices {
 		 if (allRoutines[rIndex].routineName == routine.routineName) {
 			for tIndex in allRoutines[rIndex].tasks.indices {
 			   if (allRoutines[rIndex].tasks[tIndex].name == task.name) {
 				  allRoutines[rIndex].tasks[tIndex].pending.toggle()
 			   }
+			   //if there is even 1 task that is still pending, tasksComplete is false
+			   if (allRoutines[rIndex].tasks[tIndex].pending == true){
+				  checkTasksComplete = false
+			   }
 			}
 		 }
+	  }
+	  if (checkTasksComplete == true){
+		 tasksComplete = true
+		 confetti += 1
+		 print("congratulations")
 	  }
 	  save()
 	  loadActiveRoutines()
